@@ -36,7 +36,7 @@ class FeatureGenerator():
                     
                     for idx in (len(self.sequence) - 2 - 1): # (2: GAP, 1: Di -->Di)
                         for _, nucleosides in enumerate(self.nucleosides):
-                            seq = self.sequence[idx] + self.sequence[idx + 3] +  self.sequence[idx + 4] # A__AA
+                            seq = self.sequence[idx] + self.sequence[idx + 3] # A__A
                                 
                             if seq == nucleosides:
                                 self.value.append(1)
@@ -53,7 +53,7 @@ class FeatureGenerator():
                     
                     for idx in (len(self.sequence) - 3 - 1): # (3: GAP, 1: Di -->Di)
                         for _, nucleosides in enumerate(self.nucleosides):
-                            seq = self.sequence[idx] + self.sequence[idx + 4] + self.sequence[idx + 5] + + self.sequence[idx + 6] # A___AAA
+                            seq = self.sequence[idx] + self.sequence[idx + 4] # A___A
                                 
                             if seq == nucleosides:
                                 self.value.append(1)
