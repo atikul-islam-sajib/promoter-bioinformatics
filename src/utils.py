@@ -87,7 +87,7 @@ tri_nucleosides = [
 ]
 
 
-tetra_neucliotides = [
+tetra_nucleosides = [
     "AAAA",
     "AAAC",
     "AAAG",
