@@ -1,4 +1,5 @@
 import pandas as pd
+from utils import dump, load
 from feature_generator import FeatureGenerator
 
 class Loader():
