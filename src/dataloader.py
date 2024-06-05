@@ -33,32 +33,43 @@ class Loader():
             
     def create_features(self, dataset=None):
         
+        single_nucleosides_features = FeatureGenerator().generate_features(
+            dataset = dataset,
+            type="single"
+        )
+        
+        print(single_nucleosides_features.shape)
+        print(single_nucleosides_features.isnull().sum().sum())
+        print(single_nucleosides_features.head())
+        
+        print("-----------------------------------------------------------")        
+        
         di_nucleosides_features = FeatureGenerator().generate_features(
             dataset = dataset,
             type="di"
         )
+
+        print(di_nucleosides_features.shape)
+        print(di_nucleosides_features.isnull().sum().sum())
+        print(di_nucleosides_features.head())
+        
+        print("-----------------------------------------------------------")   
         
         tri_nucleosides_features = FeatureGenerator().generate_features(
             dataset = dataset,
             type="tri"
         )
         
-        tetra_nucleosides_features = FeatureGenerator().generate_features(
-            dataset = dataset,
-            type="tetra"
-        )
-        
-        print(di_nucleosides_features.shape)
-        print(di_nucleosides_features.isnull().sum().sum())
-        print(di_nucleosides_features.head())
-        
-        print("-----------------------------------------------------------")
-        
         print(tri_nucleosides_features.shape)
         print(tri_nucleosides_features.isnull().sum().sum())
         print(tri_nucleosides_features.head())
         
         print("-----------------------------------------------------------")
+        
+        tetra_nucleosides_features = FeatureGenerator().generate_features(
+            dataset = dataset,
+            type="tetra"
+        )
         
         print(tetra_nucleosides_features.shape)
         print(tetra_nucleosides_features.isnull().sum().sum())
