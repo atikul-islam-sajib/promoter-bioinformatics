@@ -1,3 +1,4 @@
+import yaml
 import joblib
 
 single_nucleosides = ["A", "C", "G", "T"]
@@ -362,3 +363,7 @@ def load(filename = None):
     
     else:
         raise ValueError("Filename should be passed in an appropriate manner".capitalize())
+    
+def config():
+    with open("./config.yml", "r") as file:
+        return yaml.safe_load(file)
