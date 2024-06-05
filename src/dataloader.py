@@ -43,17 +43,17 @@ class Loader():
             type="tri"
         )
         
-        print(di_nucleosides_features.shape)
-        print(di_nucleosides_features.isnull().sum().sum())
+        # print(di_nucleosides_features.shape)
+        # print(di_nucleosides_features.isnull().sum().sum())
         
-        print(di_nucleosides_features.head())
+        # print(di_nucleosides_features.head())
         
-        print(dataset.shape)
-        print(dataset.isnull().sum().sum())
-        print(dataset.head())
+        # print(dataset.shape)
+        # print(dataset.isnull().sum().sum())
+        # print(dataset.head())
         
-        print(tri_nucleosides_features.head())
-        print(tri_nucleosides_features.shape)
+        # print(tri_nucleosides_features.head())
+        # print(tri_nucleosides_features.shape)
         
     
     
