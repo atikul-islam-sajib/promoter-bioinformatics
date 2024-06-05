@@ -218,9 +218,50 @@ class FeatureGenerator():
                         
                 print("tetra nucleosides features generation is completed...".title())
                 
-                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "final_dataset.csv"))
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "single_di_tri_tetra.csv"))
                         
                 return dataset
             
+            elif type == "GC":
+                self.nucleosides = single_nucleosides
+                
+                self.GC_Content = []
+                self.value = []
+                
+                for _, sequence in tqdm(enumerate(dataset.loc[:, "sequence"])):
+                    G = sequence.count("G".upper())
+                    C = sequence.count("C".upper())
+                    A = sequence.count("A".upper())
+                    T = sequence.count("T".upper())
+                    
+                    self.GC_Content.append((G + C)/(A + C + G + T))
+                    
+                    self.GC_Count = (G + C)
+                    
+                    if self.GC_Count > 10:
+                        self.value.append(1)
+                        
+                    else:
+                        self.value.append(0)
+                    
+                dataset["GC_Content"] = self.GC_Content
+                dataset["GC_Content>10"] = self.value
+                
+                print("GC Content features generation is completed...".title())
+                
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "final_dataset.csv"))
+                        
+                return dataset                
+            
             else:
                 raise TypeError("Please select the type to create the Features for Promoters.".capitalize())
+            
+            
+            
+if __name__ == "__main__":
+    feature_generator = FeatureGenerator()
+    
+    for type in ["single", "di", "tri", "tetra", "GC"]:
+        _ = feature_generator.generate_features(
+            type=type, dataset="./data/processed/dataset.csv"
+        )

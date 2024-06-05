@@ -1,4 +1,5 @@
 import os
+import argparse
 import pandas as pd
 from utils import dump, load, config
 from feature_generator import FeatureGenerator
@@ -45,21 +46,62 @@ class Loader():
         else:
             ValueError("Dataset should be in the format of pandas dataFrame".capitalize())
             
-    def create_features(self, dataset=None):
+    def split_dataset(self, **kwargs):
+        pass
+            
+    def create_features(self, dataset=None, features_type=None):
         
-        for type in ["single", "di", "tri", "tetra"]:
-            _ = FeatureGenerator().generate_features(dataset = dataset, type=type)
+        if isinstance(dataset, pd.pandas.DataFrame) and isinstance(features_type, list):
+        
+            for type in features_type:
+                _ = FeatureGenerator().generate_features(dataset = dataset, type=type)
+                
+            print(
+                "Features Generation is completed and saved in the path # {}".format(self.config["path"]["PROCESSED_DATA_PATH"])
+            )
+                
+        else:
+            raise ValueError(
+                "Features cannot be generated: Features type should be in list format and dataFrame should be in pandas format".capitalize()
+            )
+            
+    @staticmethod
+    def dataset_details():
+        pass
     
     
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Dataloader for Promoters".title())
+    
+    parser.add_argument(
+        "--dataset", type=str, default=config()["dataloader"]["dataset"], help="Define the dataset, CSV file".capitalize()
+    )
+    parser.add_argument(
+        "--test_size", type=float, default=config()["dataloader"]["test_size"], help="Define the train and test split of the dataset".capitalize()
+    )
+    parser.add_argument(
+        "--shuffle", type=bool, default=config()["dataloader"]["shuffle"], help="Define whether dataset needs to be shuffle or not".capitalize()
+    )
+    parser.add_argument(
+        "--random_state", type=int, default=config()["dataloader"]["random_state"], help="Define the random state of the dataset".capitalize()
+    )
+    parser.add_argument(
+        "--preprocess", type=bool, default=config()["dataloader"]["preprocess"], help="Define the dataset needs to preprocess or not".capitalize()
+    )
+    parser.add_argument(
+        "--type", type=list, default=config()["dataloader"]["features_type"], help="Define the types of features - how will it be created".capitalize()
+    )
+    
+    args = parser.parse_args()
+    
     loader = Loader(
-        dataset="./data/raw/promoters.data",
-        test_size=0.25,
-        shuffle=True,
-        random_state=42,
-        preprocess=False
+        dataset=args.dataset,
+        test_size=args.test_size,
+        shuffle=args.shuffle,
+        random_state=args.random_state,
+        preprocess=args.preprocess
     )
     
     dataset = loader.load_dataset()
     
-    loader.create_features(dataset=dataset)
+    loader.create_features(dataset=dataset, features_type=args.type)
