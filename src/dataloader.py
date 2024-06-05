@@ -43,17 +43,25 @@ class Loader():
             type="tri"
         )
         
-        # print(di_nucleosides_features.shape)
-        # print(di_nucleosides_features.isnull().sum().sum())
+        tetra_nucleosides_features = FeatureGenerator().generate_features(
+            dataset = dataset,
+            type="tetra"
+        )
         
-        # print(di_nucleosides_features.head())
+        print(di_nucleosides_features.shape)
+        print(di_nucleosides_features.isnull().sum().sum())
         
-        # print(dataset.shape)
-        # print(dataset.isnull().sum().sum())
-        # print(dataset.head())
+        print(di_nucleosides_features.head())
         
-        # print(tri_nucleosides_features.head())
-        # print(tri_nucleosides_features.shape)
+        print(dataset.shape)
+        print(dataset.isnull().sum().sum())
+        print(dataset.head())
+        
+        print(tri_nucleosides_features.head())
+        print(tri_nucleosides_features.shape)
+        
+        print(tetra_nucleosides_features.head())
+        print(tetra_nucleosides_features.shape)
         
     
     

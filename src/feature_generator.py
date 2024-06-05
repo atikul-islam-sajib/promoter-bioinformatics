@@ -153,3 +153,23 @@ class FeatureGenerator():
                                 
                     for idx, val in enumerate(self.value):
                         dataset.loc[index, f"1_GAP_KMer_tetra_{idx}"]=val
+                        
+                for index in tqdm(range(dataset.shape[0])):
+                    self.value = []
+                    self.sequence = dataset.loc[index, "sequence"]
+                    
+                    for idx in range(len(self.sequence) - 2 - 3): # (2: GAP, 1: tetra -->tetra)
+                        for _, nucleosides in enumerate(self.nucleosides):
+                            seq = self.sequence[idx] + self.sequence[idx + 3] + self.sequence[idx + 4] + self.sequence[idx + 5]# A__AAA
+                                
+                            if seq == nucleosides:
+                                self.value.append(1)
+                                
+                            else:
+                                self.value.append(0)               
+                                
+                    for idx, val in enumerate(self.value):
+                        dataset.loc[index, f"2_GAP_KMer_tetra_{idx}"]=val
+                        
+                        
+                return dataset
