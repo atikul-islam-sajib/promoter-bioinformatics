@@ -38,6 +38,11 @@ class Loader():
             type="di"
         )
         
+        tri_nucleosides_features = FeatureGenerator().generate_features(
+            dataset = dataset,
+            type="tri"
+        )
+        
         print(di_nucleosides_features.shape)
         print(di_nucleosides_features.isnull().sum().sum())
         
@@ -46,6 +51,9 @@ class Loader():
         print(dataset.shape)
         print(dataset.isnull().sum().sum())
         print(dataset.head())
+        
+        print(tri_nucleosides_features.head())
+        print(tri_nucleosides_features.shape)
         
     
     
