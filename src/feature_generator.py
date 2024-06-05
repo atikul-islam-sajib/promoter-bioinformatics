@@ -95,7 +95,7 @@ class FeatureGenerator():
                 
                 print("di nucleosides features generation is completed...".title())
                 
-                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "di.csv"))        
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "single_di.csv"))        
                         
                 return dataset
                         
@@ -157,7 +157,7 @@ class FeatureGenerator():
                         
                 print("tri nucleosides features generation is completed...".title())
                 
-                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "tri.csv"))
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "single_di_tri.csv"))
                 
                 return dataset
             
@@ -218,7 +218,7 @@ class FeatureGenerator():
                         
                 print("tetra nucleosides features generation is completed...".title())
                 
-                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "tetra.csv"))
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "final_dataset.csv"))
                         
                 return dataset
             
