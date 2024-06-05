@@ -1,6 +1,6 @@
 import pandas as pd
 from tqdm import tqdm
-from utils import di_nucleosides, tri_nucleosides, tetra_nucleosides
+from utils import di_nucleosides, tri_nucleosides, tetra_nucleosides, single_nucleosides
 
 
 import warnings
@@ -15,7 +15,23 @@ class FeatureGenerator():
         
     def generate_features(self, dataset = None, type = None):
         if isinstance(dataset, pd.pandas.DataFrame):
-            if type == "di":
+            if type == "single":
+                for nucleosides in tqdm(single_nucleosides):
+                    for i in range(len(dataset.loc[0, "sequence"])):
+                        feature_name = 'Index' + str(i) + '_' + nucleosides
+                        
+                        values = []
+                        
+                        for j in range(dataset.shape[0]):
+                            sequence = dataset.loc[j, "sequence"]
+                            if sequence[i] == nucleosides:
+                                values.append(1)
+                            else:
+                                values.append(0)
+                                
+                        dataset[feature_name] = values
+            
+            elif type == "di":
                 self.nucleosides = di_nucleosides
             
                 for index in tqdm(range(dataset.shape[0])):
@@ -192,3 +208,6 @@ class FeatureGenerator():
                         
                         
                 return dataset
+            
+            else:
+                raise TypeError("Please select the type to create the Features for Promoters.".capitalize())
