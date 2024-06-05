@@ -141,7 +141,7 @@ class FeatureGenerator():
                     self.value = []
                     self.sequence = dataset.loc[index, "sequence"]
                     
-                    for idx in range(len(self.sequence) - 1 - 3): # (1: GAP, 1: tetra -->tetra)
+                    for idx in range(len(self.sequence) - 1 - 3): # (1: GAP, 3: tetra -->tetra)
                         for _, nucleosides in enumerate(self.nucleosides):
                             seq = self.sequence[idx] + self.sequence[idx + 2] + self.sequence[idx + 3] + self.sequence[idx + 4]# A_AAA
                                 
@@ -158,7 +158,7 @@ class FeatureGenerator():
                     self.value = []
                     self.sequence = dataset.loc[index, "sequence"]
                     
-                    for idx in range(len(self.sequence) - 2 - 3): # (2: GAP, 1: tetra -->tetra)
+                    for idx in range(len(self.sequence) - 2 - 3): # (2: GAP, 3: tetra -->tetra)
                         for _, nucleosides in enumerate(self.nucleosides):
                             seq = self.sequence[idx] + self.sequence[idx + 3] + self.sequence[idx + 4] + self.sequence[idx + 5]# A__AAA
                                 
@@ -170,6 +170,25 @@ class FeatureGenerator():
                                 
                     for idx, val in enumerate(self.value):
                         dataset.loc[index, f"2_GAP_KMer_tetra_{idx}"]=val
+                        
+                for index in tqdm(range(dataset.shape[0])):
+                    self.value = []
+                    self.sequence = dataset.loc[index, "sequence"]
+                    
+                    for idx in range(len(self.sequence) - 3 - 3): # (3: GAP, 3: tetra -->tetra)
+                        for _, nucleosides in enumerate(self.nucleosides):
+                            seq = self.sequence[idx] + self.sequence[idx + 4] + self.sequence[idx + 5] + self.sequence[idx + 6]# A___AAA
+                                
+                            if seq == nucleosides:
+                                self.value.append(1)
+                                
+                            else:
+                                self.value.append(0)               
+                                
+                    for idx, val in enumerate(self.value):
+                        dataset.loc[index, f"3_GAP_KMer_tetra_{idx}"]=val
+                        
+                print("tetra nucleosides features generation is completed...".title())
                         
                         
                 return dataset
