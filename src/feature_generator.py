@@ -30,6 +30,8 @@ class FeatureGenerator():
                                 values.append(0)
                                 
                         dataset[feature_name] = values
+                        
+                return dataset
             
             elif type == "di":
                 self.nucleosides = di_nucleosides
