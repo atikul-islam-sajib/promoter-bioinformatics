@@ -1,4 +1,5 @@
 import pandas as pd
+from feature_generator import FeatureGenerator
 
 class Loader():
     def __init__(self, dataset = None, test_size = 0.20, shuffle = True, random_state = 42, preprocess=False):
@@ -25,10 +26,27 @@ class Loader():
             dataset["labels"] = dataset["labels"].map({"+": 1, "-": 0}).astype("int")
             dataset["sequence"] = dataset["sequence"].str.replace("\t", "").str.upper()
             
-            print(dataset.head(2))
+            return dataset
         
         else:
             ValueError("Dataset should be in the format of pandas dataFrame".capitalize())
+            
+    def create_features(self, dataset=None):
+        
+        di_nucleosides_features = FeatureGenerator().generate_features(
+            dataset = dataset,
+            type="di"
+        )
+        
+        print(di_nucleosides_features.shape)
+        print(di_nucleosides_features.isnull().sum().sum())
+        
+        print(di_nucleosides_features.head())
+        
+        print(dataset.shape)
+        print(dataset.isnull().sum().sum())
+        print(dataset.head())
+        
     
     
 if __name__ == "__main__":
@@ -40,4 +58,6 @@ if __name__ == "__main__":
         preprocess=False
     )
     
-    loader.load_dataset()
+    dataset = loader.load_dataset()
+    
+    loader.create_features(dataset=dataset)
