@@ -1,6 +1,10 @@
+import os
 import pandas as pd
-from utils import dump, load
+from utils import dump, load, config
 from feature_generator import FeatureGenerator
+
+import warnings
+warnings.filterwarnings('ignore')
 
 class Loader():
     def __init__(self, dataset = None, test_size = 0.20, shuffle = True, random_state = 42, preprocess=False):
@@ -9,6 +13,9 @@ class Loader():
         self.random_state = random_state
         self.shuffle = shuffle
         self.preprocess = preprocess
+        
+        
+        self.config = config()
         
     def load_dataset(self):
         dataset = pd.read_csv(self.dataset)
@@ -27,6 +34,12 @@ class Loader():
             dataset["labels"] = dataset["labels"].map({"+": 1, "-": 0}).astype("int")
             dataset["sequence"] = dataset["sequence"].str.replace("\t", "").str.upper()
             
+            dataset.to_csv(os.path.join(self.config["path"]["PROCESSED_DATA_PATH"], "dataset.csv"))
+            
+            dump(
+                value=dataset, filename=os.path.join(self.config["path"]["PROCESSED_DATA_PATH"], "dataset.pkl")
+            )
+            
             return dataset
         
         else:
@@ -34,48 +47,8 @@ class Loader():
             
     def create_features(self, dataset=None):
         
-        single_nucleosides_features = FeatureGenerator().generate_features(
-            dataset = dataset,
-            type="single"
-        )
-        
-        print(single_nucleosides_features.shape)
-        print(single_nucleosides_features.isnull().sum().sum())
-        print(single_nucleosides_features.head())
-        
-        print("-----------------------------------------------------------")        
-        
-        di_nucleosides_features = FeatureGenerator().generate_features(
-            dataset = dataset,
-            type="di"
-        )
-
-        print(di_nucleosides_features.shape)
-        print(di_nucleosides_features.isnull().sum().sum())
-        print(di_nucleosides_features.head())
-        
-        print("-----------------------------------------------------------")   
-        
-        tri_nucleosides_features = FeatureGenerator().generate_features(
-            dataset = dataset,
-            type="tri"
-        )
-        
-        print(tri_nucleosides_features.shape)
-        print(tri_nucleosides_features.isnull().sum().sum())
-        print(tri_nucleosides_features.head())
-        
-        print("-----------------------------------------------------------")
-        
-        tetra_nucleosides_features = FeatureGenerator().generate_features(
-            dataset = dataset,
-            type="tetra"
-        )
-        
-        print(tetra_nucleosides_features.shape)
-        print(tetra_nucleosides_features.isnull().sum().sum())
-        print(tetra_nucleosides_features.head())
-        
+        for type in ["single", "di", "tri", "tetra"]:
+            _ = FeatureGenerator().generate_features(dataset = dataset, type=type)
     
     
 if __name__ == "__main__":

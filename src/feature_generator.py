@@ -1,4 +1,6 @@
+import os
 import pandas as pd
+from utils import config
 from tqdm import tqdm
 from utils import di_nucleosides, tri_nucleosides, tetra_nucleosides, single_nucleosides
 
@@ -30,6 +32,10 @@ class FeatureGenerator():
                                 values.append(0)
                                 
                         dataset[feature_name] = values
+                        
+                print("single nucleosides features generation is completed...".title())
+                        
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "single.csv"))
                         
                 return dataset
             
@@ -87,7 +93,9 @@ class FeatureGenerator():
                     for idx, val in enumerate(self.value):
                         dataset.loc[index, f"3_GAP_KMer_di_{idx}"]=val
                 
-                print("di nucleosides features generation is completed...".title())        
+                print("di nucleosides features generation is completed...".title())
+                
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "di.csv"))        
                         
                 return dataset
                         
@@ -149,6 +157,8 @@ class FeatureGenerator():
                         
                 print("tri nucleosides features generation is completed...".title())
                 
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "tri.csv"))
+                
                 return dataset
             
             elif type == "tetra":
@@ -207,7 +217,8 @@ class FeatureGenerator():
                         dataset.loc[index, f"3_GAP_KMer_tetra_{idx}"]=val
                         
                 print("tetra nucleosides features generation is completed...".title())
-                        
+                
+                dataset.to_csv(os.path.join(config()["path"]["PROCESSED_DATA_PATH"], "tetra.csv"))
                         
                 return dataset
             
