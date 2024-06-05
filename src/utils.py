@@ -1,3 +1,5 @@
+import joblib
+
 single_nucleosides = ["A", "C", "G", "T"]
 
 di_nucleosides = [
@@ -345,3 +347,18 @@ tetra_nucleosides = [
     "TTTG",
     "TTTT",
 ]
+
+def dump(value = None, filename = None):
+    if (value is not None) and (filename is not None):
+        joblib.dump(value=value, filename=filename)
+        
+    else:
+        raise ValueError("Value & Filename should be passed.".capitalize())
+    
+    
+def load(filename = None):
+    if filename is not None:
+        return joblib.load(filename=filename)
+    
+    else:
+        raise ValueError("Filename should be passed in an appropriate manner".capitalize())
