@@ -50,18 +50,19 @@ class Loader():
         
         print(di_nucleosides_features.shape)
         print(di_nucleosides_features.isnull().sum().sum())
-        
         print(di_nucleosides_features.head())
         
-        print(dataset.shape)
-        print(dataset.isnull().sum().sum())
-        print(dataset.head())
+        print("-----------------------------------------------------------")
         
-        print(tri_nucleosides_features.head())
         print(tri_nucleosides_features.shape)
+        print(tri_nucleosides_features.isnull().sum().sum())
+        print(tri_nucleosides_features.head())
         
-        print(tetra_nucleosides_features.head())
+        print("-----------------------------------------------------------")
+        
         print(tetra_nucleosides_features.shape)
+        print(tetra_nucleosides_features.isnull().sum().sum())
+        print(tetra_nucleosides_features.head())
         
     
     
