@@ -1,0 +1,12 @@
+dagshub                
+dvc  
+matplotlib   
+matplotlib-inline       
+numpy 
+pandas  
+PyYAML    
+scikit-image             
+scikit-learn      
+seaborn                   
+tqdm                      
+xgboost                  
